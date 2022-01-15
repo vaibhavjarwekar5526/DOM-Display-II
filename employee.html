@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DOM Display-II</title>
+        <style>
+            form {
+                border: 2px solid black;
+                width: 300px;
+                margin-bottom: 30px;
+            }
+            lable, input, select{
+                display:block;
+                margin: 10px;
+            }
+            tr,th,td{
+                border: 2px solid black;
+            }
+            button{
+                margin: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <lable for="e_name">Employee Name:</lable>
+            <input type="text" placeholder="Employee Name" id="e_name"/>
+            <lable for="e_dept">Department:</lable>
+            <select id="e_dept">
+                <option>Select</option>
+                <option>Sales</option>
+                <option>Marketing</option>
+                <option>Operation</option>
+                <option>HR</option>
+            </select>
+            <lable for="s_year1">Sales Year 1:</lable>
+            <input type="number" id="s_year1"/>
+            <lable for="s_year2">Sales Year 2:</lable>
+            <input type="number" id="s_year2"/>
+            <input id="btn" type="submit" value="Submit"/>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Department</th>
+                    <th>Sales Year 1</th>
+                    <th>Sales Year 2</th>
+                    <th>Average</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <button>Ascending</button>
+        <button>Descending</button>
+        <script>
+           document.querySelector("#btn").addEventListener("click", addData);
+            var arr = [];
+            function addData(event){
+                event.preventDefault();
+                var tbody = document.querySelectorAll("tbody")[0];
+            
+                var name = document.getElementById("e_name").value;
+                var td1 = document.createElement("td");
+                td1.textContent = name;
+
+                var dept = document.getElementById("e_dept").value;
+                var td2 = document.createElement("td");
+                td2.textContent = dept;
+
+                var s_year1 = document.getElementById("s_year1").value;
+                var td3 = document.createElement("td");
+                td3.textContent = s_year1;
+
+                var s_year2 = document.getElementById("s_year2").value;
+                var td4 = document.createElement("td");
+                td4.textContent = s_year2;
+
+                var average = (s_year1/2) + (s_year2/2);
+                
+                
+                var td5 = document.createElement("td");
+                td5.textContent = average;
+
+                var tr = document.createElement("tr");
+                tr.append(td1, td2, td3, td4, td5);
+                tbody.append(tr);
+
+                arr.push([name, dept, s_year1, s_year2, average]);
+            }
+
+            document.querySelectorAll("button")[0].addEventListener("click", ascending);
+            function ascending(){
+                arr.sort(function(a,b){return a[4]-b[4]})
+                
+                for(var i=0; i<arr.length; i++){
+                    var row = document.querySelectorAll("tr")[i+1];
+                    row.getElementsByTagName("td")[0].innerText = arr[i][0];
+                    row.getElementsByTagName("td")[1].innerText = arr[i][1];
+                    row.getElementsByTagName("td")[2].innerText = arr[i][2];
+                    row.getElementsByTagName("td")[3].innerText = arr[i][3];
+                    row.getElementsByTagName("td")[4].innerText = arr[i][4];
+                }
+            }
+
+            document.querySelectorAll("button")[1].addEventListener("click", descending);
+            function descending(){
+                arr.sort(function(a,b){return b[4]-a[4]})
+                
+                for(var i=0; i<arr.length; i++){
+                    var row = document.querySelectorAll("tr")[i+1];
+                    row.getElementsByTagName("td")[0].innerText = arr[i][0];
+                    row.getElementsByTagName("td")[1].innerText = arr[i][1];
+                    row.getElementsByTagName("td")[2].innerText = arr[i][2];
+                    row.getElementsByTagName("td")[3].innerText = arr[i][3];
+                    row.getElementsByTagName("td")[4].innerText = arr[i][4];
+                }
+            }
+        </script>
+    </body>
+</html>
